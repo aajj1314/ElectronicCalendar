@@ -1,0 +1,5 @@
+".\Objects\main.obj",
+".\Objects\delay.obj",
+".\Objects\Nixie.obj" 
+TO ".\Objects\Electronic_Calendar" 
+PRINT(".\Listings\Electronic_Calendar.m51") RAMSIZE(256) 

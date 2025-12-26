@@ -1,0 +1,282 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    12/26/2025  10:55:47  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+E:\KEIL_V5\KEIL_MDK\C51\BIN\BL51.EXE .\Objects\main.obj, .\Objects\delay.obj, .\Objects\Nixie.obj TO .\Objects\Electroni
+>> c_Calendar PRINT (.\Listings\Electronic_Calendar.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\main.obj (MAIN)
+  .\Objects\delay.obj (DELAY)
+  .\Objects\Nixie.obj (NIXIE)
+  E:\KEIL_V5\KEIL_MDK\C51\LIB\C51S.LIB (?C_STARTUP)
+  E:\KEIL_V5\KEIL_MDK\C51\LIB\C51S.LIB (?C?UIDIV)
+  E:\KEIL_V5\KEIL_MDK\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\Electronic_Calendar (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0010H     UNIT         ?DT?NIXIE
+                    0018H     0008H                  *** GAP ***
+            BIT     0020H.0   0000H.1   UNIT         ?BI?MAIN
+                    0020H.1   0000H.7                *** GAP ***
+            DATA    0021H     001BH     UNIT         ?DT?MAIN
+            IDATA   003CH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     00B6H     UNIT         ?PR?KEY_CHOOSE?MAIN
+            CODE    00B9H     008CH     UNIT         ?C_C51STARTUP
+            CODE    0145H     006DH     UNIT         ?PR?_N_D?NIXIE
+            CODE    01B2H     0065H     UNIT         ?PR?LIMIT?MAIN
+            CODE    0217H     0065H     UNIT         ?PR?CONVERT?MAIN
+            CODE    027CH     0055H     UNIT         ?C?LIB_CODE
+            CODE    02D1H     0038H     UNIT         ?PR?N_D_SETUP?MAIN
+            CODE    0309H     0031H     UNIT         ?C_INITSEG
+            CODE    033AH     001DH     UNIT         ?PR?OPEN_KEY?MAIN
+            CODE    0357H     0015H     UNIT         ?PR?_DELAY?DELAY
+            CODE    036CH     0011H     UNIT         ?PR?MAIN?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\Electronic_Calendar (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/26/2025  10:55:47  PAGE 2
+
+
+?PR?MAIN?MAIN
+  +--> ?PR?OPEN_KEY?MAIN
+  +--> ?PR?KEY_CHOOSE?MAIN
+  +--> ?PR?LIMIT?MAIN
+  +--> ?PR?CONVERT?MAIN
+  +--> ?PR?N_D_SETUP?MAIN
+
+?PR?OPEN_KEY?MAIN
+  +--> ?PR?_DELAY?DELAY
+
+?PR?KEY_CHOOSE?MAIN
+  +--> ?PR?LIMIT?MAIN
+  +--> ?PR?CONVERT?MAIN
+  +--> ?PR?N_D_SETUP?MAIN
+  +--> ?PR?_DELAY?DELAY
+
+?PR?N_D_SETUP?MAIN
+  +--> ?PR?_N_D?NIXIE
+
+?PR?_N_D?NIXIE
+  +--> ?PR?_DELAY?DELAY
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\Electronic_Calendar (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00A0H         PUBLIC        P2
+  C:0217H         PUBLIC        convert
+  D:0021H         PUBLIC        Month
+  C:0003H         PUBLIC        Key_choose
+  D:0022H         PUBLIC        Year
+  B:00A0H.3       PUBLIC        P2_3
+  B:00A0H.4       PUBLIC        P2_4
+  B:00A0H.5       PUBLIC        P2_5
+  B:00A0H.6       PUBLIC        P2_6
+  B:00A0H.7       PUBLIC        P2_7
+  D:0024H         PUBLIC        Day
+  C:01B2H         PUBLIC        limit
+  C:036CH         PUBLIC        main
+  B:0020H.0       PUBLIC        Turn_flag
+  D:0025H         PUBLIC        count
+  C:033AH         PUBLIC        open_Key
+  D:0026H         PUBLIC        Month_dey_max
+  C:02D1H         PUBLIC        N_D_Setup
+  D:0033H         PUBLIC        low_bits
+  D:0034H         PUBLIC        D1
+  D:0035H         PUBLIC        D2
+  D:0036H         PUBLIC        D3
+  D:0037H         PUBLIC        D4
+  D:0038H         PUBLIC        D5
+  D:0039H         PUBLIC        D6
+  D:003AH         PUBLIC        D7
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/26/2025  10:55:47  PAGE 3
+
+
+  D:003BH         PUBLIC        D8
+  -------         PROC          MAIN
+  C:036CH         LINE#         26
+  C:036CH         LINE#         27
+  C:036CH         LINE#         28
+  C:036CH         LINE#         29
+  C:036CH         LINE#         30
+  C:036FH         LINE#         31
+  C:0372H         LINE#         32
+  C:0375H         LINE#         33
+  C:0378H         LINE#         34
+  C:037BH         LINE#         35
+  -------         ENDPROC       MAIN
+  -------         PROC          KEY_CHOOSE
+  C:0003H         LINE#         38
+  C:0003H         LINE#         39
+  C:0003H         LINE#         40
+  C:0009H         LINE#         41
+  C:0009H         LINE#         42
+  C:000FH         LINE#         43
+  C:0012H         LINE#         44
+  C:0015H         LINE#         45
+  C:0018H         LINE#         46
+  C:001AH         LINE#         47
+  C:001CH         LINE#         48
+  C:001EH         LINE#         49
+  C:0020H         LINE#         50
+  C:003BH         LINE#         51
+  C:0056H         LINE#         52
+  C:005CH         LINE#         53
+  C:005EH         LINE#         54
+  C:0060H         LINE#         55
+  C:0062H         LINE#         56
+  C:0064H         LINE#         57
+  C:0085H         LINE#         58
+  C:00A0H         LINE#         59
+  C:00B5H         LINE#         60
+  C:00B8H         LINE#         61
+  -------         ENDPROC       KEY_CHOOSE
+  -------         PROC          LIMIT
+  C:01B2H         LINE#         63
+  C:01B2H         LINE#         64
+  C:01B2H         LINE#         65
+  C:01DDH         LINE#         66
+  C:01EFH         LINE#         67
+  C:0205H         LINE#         68
+  C:0216H         LINE#         70
+  -------         ENDPROC       LIMIT
+  -------         PROC          CONVERT
+  C:0217H         LINE#         73
+  C:0217H         LINE#         74
+  C:0217H         LINE#         75
+  C:0224H         LINE#         76
+  C:0238H         LINE#         77
+  C:024CH         LINE#         78
+  C:0259H         LINE#         80
+  C:0261H         LINE#         81
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/26/2025  10:55:47  PAGE 4
+
+
+  C:026AH         LINE#         83
+  C:0272H         LINE#         84
+  C:027BH         LINE#         85
+  -------         ENDPROC       CONVERT
+  -------         PROC          N_D_SETUP
+  C:02D1H         LINE#         87
+  C:02D1H         LINE#         88
+  C:02D1H         LINE#         89
+  C:02D8H         LINE#         90
+  C:02DFH         LINE#         92
+  C:02E6H         LINE#         93
+  C:02EDH         LINE#         95
+  C:02F4H         LINE#         96
+  C:02FBH         LINE#         97
+  C:0302H         LINE#         98
+  -------         ENDPROC       N_D_SETUP
+  -------         PROC          OPEN_KEY
+  C:033AH         LINE#         101
+  C:033AH         LINE#         102
+  C:033AH         LINE#         103
+  C:033CH         LINE#         104
+  C:033EH         LINE#         105
+  C:0341H         LINE#         106
+  C:0341H         LINE#         107
+  C:0348H         LINE#         108
+  C:034BH         LINE#         109
+  C:034BH         LINE#         110
+  C:0352H         LINE#         111
+  C:0354H         LINE#         112
+  C:0356H         LINE#         113
+  C:0356H         LINE#         115
+  C:0356H         LINE#         117
+  -------         ENDPROC       OPEN_KEY
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        DELAY
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0357H         PUBLIC        _Delay
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        xms
+  -------         DO            
+  D:0005H         SYMBOL        i
+  D:0004H         SYMBOL        j
+  -------         ENDDO         
+  C:0357H         LINE#         5
+  C:0357H         LINE#         6
+  C:0357H         LINE#         8
+  C:0361H         LINE#         9
+  C:0361H         LINE#         10
+  C:0363H         LINE#         11
+  C:0365H         LINE#         13
+  C:0365H         LINE#         14
+  C:0367H         LINE#         15
+  C:0369H         LINE#         16
+  C:036BH         LINE#         17
+  -------         ENDPROC       _DELAY
+  -------         ENDMOD        DELAY
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  12/26/2025  10:55:47  PAGE 5
+
+
+
+  -------         MODULE        NIXIE
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  B:00A0H.0       PUBLIC        P2_0
+  B:00A0H.1       PUBLIC        P2_1
+  B:00A0H.2       PUBLIC        P2_2
+  C:0145H         PUBLIC        _N_D
+  D:0008H         PUBLIC        D_V
+  -------         PROC          _N_D
+  D:0007H         SYMBOL        loc
+  D:0005H         SYMBOL        val
+  C:0145H         LINE#         7
+  C:0145H         LINE#         8
+  C:0145H         LINE#         9
+  C:0172H         LINE#         10
+  C:0172H         LINE#         11
+  C:0176H         LINE#         12
+  C:017EH         LINE#         13
+  C:0182H         LINE#         14
+  C:018AH         LINE#         15
+  C:018EH         LINE#         16
+  C:0196H         LINE#         17
+  C:019AH         LINE#         18
+  C:01A0H         LINE#         19
+  C:01A0H         LINE#         20
+  C:01A7H         LINE#         21
+  C:01AEH         LINE#         22
+  C:01B1H         LINE#         23
+  -------         ENDPROC       _N_D
+  -------         ENDMOD        NIXIE
+
+  -------         MODULE        ?C?UIDIV
+  C:027CH         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
+Program Size: data=52.1 xdata=0 code=893
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

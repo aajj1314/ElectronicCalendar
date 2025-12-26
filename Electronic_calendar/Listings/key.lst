@@ -1,0 +1,42 @@
+C51 COMPILER V9.60.0.0   KEY                                                               12/26/2025 03:18:34 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE KEY
+OBJECT MODULE PLACED IN .\Objects\key.obj
+COMPILER INVOKED BY: F:\Keil_All\Keil_MDK\C51\BIN\C51.EXE key.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\List
+                    -ings\key.lst) TABS(2) OBJECT(.\Objects\key.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Delay.h"
+   3          #include "Key.h"
+   4          
+   5          unsigned char MKey(void)
+   6          {
+   7   1      unsigned char  key_nem ;
+   8   1      while(1)
+   9   1      {   
+  10   2          P2_3 = 0;
+  11   2          P2 &= 0x0f ;
+  12   2          P2 |= 0x10 ;
+  13   2          if(P2_6==0){Delay(10);  Delay(2); x=~x   ;  }
+*** ERROR C202 IN LINE 13 OF key.c: 'x': undefined identifier
+  14   2          if(P2_7==0){Delay(10);  Delay(2); Dey++  ;  } 
+*** ERROR C202 IN LINE 14 OF key.c: 'Dey': undefined identifier
+  15   2          
+  16   2          P2 &= 0x0f ;
+  17   2          P2 |= 0x20 ;    
+  18   2          if(P2_6==0){Delay(10);  Delay(2); Month++ ;  }
+*** ERROR C202 IN LINE 18 OF key.c: 'Month': undefined identifier
+  19   2          if(P2_7==0){Delay(10);  Delay(2); Year++  ;  }  
+*** ERROR C202 IN LINE 19 OF key.c: 'Year': undefined identifier
+  20   2        return key_nem ;
+  21   2        }
+  22   1      }
+  23          
+  24          
+  25          
+  26          
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  4 ERROR(S)

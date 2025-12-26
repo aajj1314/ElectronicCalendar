@@ -1,0 +1,163 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              12/26/2025 10:55:46 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: E:\Keil_v5\Keil_MDK\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\List
+                    -ings\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          /*
+   2           * 日期设置程序
+   3           * 功能：通过按键控制设置年、月、日
+   4           * 作者：[Anan]
+   5           * 日期：[2025-12-26]
+   6           * 版本：[1.7]
+   7           */
+   8          #include <REGX52.H>
+   9          #include <intrins.h>
+  10          #include "Nixie.h"
+  11          #include "delay.h"
+  12          unsigned char Day = 26 , Month = 12 ;                                                //初始日月变量 
+             -                      
+  13          unsigned int  Year = 2025 ;                                                          //初始年份变量 
+             -             
+  14          unsigned char low_bits ;                                                             //按键扫描低四�
+             -��变量            
+  15          unsigned char count = 0 ;                                                            //按键计数变量(
+             -计数2次，因为进入设置模式后，计数会自动加1次)           
+  16          unsigned char D1 , D2 , D3 , D4 , D5 , D6 , D7 , D8 ;                                //数码管显示数�
+             -��变量
+  17          unsigned char Month_dey_max[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; //月份对应的最�
+             -��天数数组，下标对应月份，下标0无意，为义索引占位
+  18          bit Turn_flag = 0 ;                                                                  //进入设置模式�
+             -��志位
+  19          ////////////////////////////////////////////////
+  20          void Key_choose(void); //按键选择设置数据函数
+  21          void limit (void);     //日期数据限制函数
+  22          void convert (void);   //数码管显示数据转换函数
+  23          void N_D_Setup(void);  //数码管显示设置的日期函数
+  24          void open_Key(void);   //按键扫描入口函数
+  25          ////////////////////////////////////////////////
+  26          void main()
+  27          { 
+  28   1        while(1)
+  29   1        {   
+  30   2          open_Key();
+  31   2          Key_choose();
+  32   2          limit();
+  33   2          convert();
+  34   2          N_D_Setup();
+  35   2        } 
+  36   1      }
+  37          ////////////////////////////////////////////////
+  38          void Key_choose(void)
+  39          {
+  40   1          while (Turn_flag == 1)
+  41   1          {
+  42   2              low_bits = P2 & 0x0F;                                                           // 读取P2口的�
+             -��四位
+  43   2              limit();
+  44   2          convert();
+  45   2              N_D_Setup();
+  46   2              P2_4 = 0;                                                                       // 扫描第一行
+C51 COMPILER V9.60.0.0   MAIN                                                              12/26/2025 10:55:46 PAGE 2   
+
+             -（P2_4=0, other =1）
+  47   2              P2_5 = 1;
+  48   2              P2_6 = 1;
+  49   2              P2_7 = 1;
+  50   2              if(P2_7==0){Delay(2); while(P2_7==0){N_D_Setup();}; Delay(2); Day++;   }        //按键控制日
+  51   2              if(P2_6==0){Delay(2); while(P2_6==0){N_D_Setup();}; Delay(2); Month++ ;}        //按键控制月
+  52   2              low_bits = P2 & 0x0F; 
+  53   2              P2_4 = 1; 
+  54   2              P2_5 = 0;                                                                       // 扫描第二行
+             -（P2_5 = 0 other = 1 ）
+  55   2              P2_6 = 1;
+  56   2              P2_7 = 1;
+  57   2              if(P2_7==0){Delay(2); while(P2_7==0){N_D_Setup();}; Delay(2); Year++ ; }        //按键控制年
+  58   2              if(P2_6==0){Delay(2); while(P2_6==0){N_D_Setup();}; Delay(2); count++ ;}        //按键控制退�
+             -��设置
+  59   2              if(count > 1){count=0; Turn_flag=0;  P2_3 = 1; }                                //退出设置模�
+             -��   
+  60   2          }
+  61   1      }
+  62          ////////////////////////////////////////////////
+  63          void limit (void)
+  64          {
+  65   1        if ( Year % 400 == 0 ||Year % 4 == 0 && Year % 100 != 0){ Month_dey_max[2] = 29; } else{Month_dey_max[2] 
+             -= 28 ;} //年份闰年判断
+  66   1        if ( Day > Month_dey_max[Month] ){ Day = 1; Month++ ; }                                                  
+             -        //日期最大值限制
+  67   1        if ( Month > 12  ) { Month = 1 ; Year++ ; }                                                              
+             -        //月份最大值限制                                   
+  68   1        if ( Year >= 2125 ) { Year = 1 ;  }                                                                      
+             -        //年份最大值限制   
+  69   1      
+  70   1      }
+  71          ////////////////////////////////////////////////
+  72          
+  73          void convert (void)
+  74          {
+  75   1          D1 = Year / 1000;                   //年千位
+  76   1          D2 = (Year / 100) % 10;             //年百位
+  77   1          D3 = (Year / 10) % 10;              //年十位
+  78   1          D4 = Year % 10;                     //年个位
+  79   1        
+  80   1        D5 = Month / 10 ;                   //月十位
+  81   1        D6 = Month % 10 ;                   //月个位
+  82   1        
+  83   1        D7 = Day / 10 ;                     //日十位
+  84   1        D8 = Day % 10 ;                     //日个位
+  85   1      }
+  86          ////////////////////////////////////////////////
+  87          void N_D_Setup(void)
+  88          {
+  89   1            N_D(8,D8) ;                     //显示日个位
+  90   1          N_D(7,D7) ;                     //显示日十位
+  91   1          
+  92   1          N_D(6,D6) ;                     //显示月个位
+  93   1          N_D(5,D5) ;                     //显示月十位
+  94   1          
+  95   1          N_D(4,D4) ;                     //显示年个位
+  96   1          N_D(3,D3) ;                     //显示年十位
+  97   1          N_D(2,D2) ;                     //显示年百位
+  98   1          N_D(1,D1) ;                     //显示年千位
+  99   1      }
+ 100          ////////////////////////////////////////////////
+C51 COMPILER V9.60.0.0   MAIN                                                              12/26/2025 10:55:46 PAGE 3   
+
+ 101          void open_Key(void)
+ 102          {
+ 103   1          P2_5 = 0;                           //扫描
+ 104   1          P2_6 = 1;                           //扫描
+ 105   1          if(P2_6==0)                         //进入设置模式判断I/O口
+ 106   1          {
+ 107   2            Delay(15);
+ 108   2            if(P2_6==0)
+ 109   2            {
+ 110   3              Delay(10);
+ 111   3              Turn_flag= 1 ;                 //进入设置模式标志位置1      
+ 112   3              P2_3 = 0;                      //指示灯点亮
+ 113   3            }
+ 114   2              
+ 115   2          }
+ 116   1          
+ 117   1      }
+ 118          
+ 119          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    486    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     27    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

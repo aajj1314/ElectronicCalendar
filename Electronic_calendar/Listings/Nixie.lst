@@ -1,0 +1,48 @@
+C51 COMPILER V9.60.0.0   NIXIE                                                             12/26/2025 10:55:46 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE NIXIE
+OBJECT MODULE PLACED IN .\Objects\Nixie.obj
+COMPILER INVOKED BY: E:\Keil_v5\Keil_MDK\C51\BIN\C51.EXE Nixie.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Lis
+                    -tings\Nixie.lst) TABS(2) OBJECT(.\Objects\Nixie.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Nixie.h"
+   3          #include "delay.h"
+   4          unsigned char D_V[] = { 0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F,0x77,0x7C,0x39,0x5E,0x79,0x71  }
+             -;          // 段选数组(共阴极数码管)
+   5                                  
+   6          
+   7          void N_D(unsigned char loc,unsigned char val)
+   8          {
+   9   1        switch(loc)                                 // 位选
+  10   1        {
+  11   2          case 1: P2_0=0; P2_1=0;P2_2=0; break;   
+  12   2          case 2: P2_0=1; P2_1=0;P2_2=0; break;
+  13   2          case 3: P2_0=0; P2_1=1;P2_2=0; break;
+  14   2          case 4: P2_0=1; P2_1=1;P2_2=0; break;
+  15   2          case 5: P2_0=0; P2_1=0;P2_2=1; break;
+  16   2          case 6: P2_0=1; P2_1=0;P2_2=1; break;
+  17   2          case 7: P2_0=0; P2_1=1;P2_2=1; break;
+  18   2          case 8: P2_0=1; P2_1=1;P2_2=1; break;     
+  19   2        }                                           
+  20   1        P0=D_V[val];                                  // 段选赋值
+  21   1        Delay(1);
+  22   1        P0=0x00;
+  23   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    109    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     16    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
